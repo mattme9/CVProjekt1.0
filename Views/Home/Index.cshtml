@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CVProjekt1._0.Models.Resume>
+@using CVProjekt1._0.Models
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<form method="post" asp-controller="Account" asp-action="Logout">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h2>Du är inloggad som @User.Identity.Name</h2>
+        <input type="Submit" value="Logga ut" />
+    }
+</form>
+
+<div class="py-5 text-center">
+    <h2>Discover A Variety Of Resumes</h2>
+    <p class="lead">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
+</div>
+
+<div class="row mb-2">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-2 text-primary">Resume</strong>
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#"></a>
+                    </h3>
+                    <div class="mb-1 text-muted">Nov 12</div>
+                    <p class="card-text mb-auto">@item.Description</p>
+                    <ul>
+                        @foreach (var skill in item.Skills)
+                        {
+                            <li>@skill.SkillName: @skill.SkillDescription</li>
+                        }
+                    </ul>
+                    <a asp-controller="User" asp-action="Details" asp-route-id="@item.User.UserId">
+                        Go To Profile Of @item.User.UserName
+                    </a>
+                </div>
+                <img class="card-img-right flex-auto d-none d-md-block" src="~/images/hatguy.jpg" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+            </div>
+        </div>
+    }
+</div>

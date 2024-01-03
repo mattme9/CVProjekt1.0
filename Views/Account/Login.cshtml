@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Titel= "Login";
+}
+@using CVProjekt1._0.ViewModels;
+@model LoginViewModel;
+
+<div asp-validation-summary="All" class="text-danger">
+<form method="post" asp-action="LogIn">
+<div class="form-group row">
+		<div class="col-sm-2">
+			<label>Username:</label>
+		</div>
+		<div class="col-sm-4">
+			<input asp-for="UserName" class="form-control" />
+		</div>
+	</div>
+	<div class="form-group row">
+<div class="col-sm-2">
+			<label>Password:</label>
+		</div>
+		<div class="col-sm-4">
+			<input asp-for="Password" class="form-control" />
+		</div>
+	</div>
+<div class="form-group row">
+<div class="offset-2 col-sm-4">
+		<button type="submit" class="btn btn-primary">Login</button>
+	</div>
+</form>
+</div>
