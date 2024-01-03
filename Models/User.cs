@@ -7,6 +7,7 @@ namespace CVProjekt1._0.Models
     {
         [Key]
         public string? UserId { get; set; }
+        public string ProfilePicturePath { get; set; }
         public virtual IEnumerable<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();
         public virtual ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
         public virtual Resume Resume { get; set; }
