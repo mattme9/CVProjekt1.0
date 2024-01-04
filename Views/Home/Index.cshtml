@@ -5,14 +5,6 @@
 @using CVProjekt1._0.ViewModels;
 @model HomePageViewModel;
 
-<form method="post" asp-controller="Account" asp-action="Logout">
-    @if (User.Identity.IsAuthenticated)
-    {
-        <h2>Du är inloggad som @User.Identity.Name</h2>
-        <input type="Submit" value="Logga ut" />
-    }
-</form>
-
 <div class="py-5 text-center">
     <h2>Discover A Variety Of Resumes</h2>
     <p class="lead">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
