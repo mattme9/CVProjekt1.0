@@ -28,6 +28,7 @@ namespace CVProjekt1._0.Controllers
             {
                 User anvandare = new User();
                 anvandare.UserName = registerViewModel.Username;
+                anvandare.isPrivate = false;
                 var result = await userManager.CreateAsync(anvandare, registerViewModel.Password);
                 if(result.Succeeded)
                 {

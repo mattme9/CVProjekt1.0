@@ -33,7 +33,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                         <label>Du är inloggad som @User.Identity.Name</label>
-                        <a class="nav-link text-dark" id="myProfileLink" asp-area="" asp-controller="User" asp-action="UserInfo">My Profile</a>
+                        <a class="nav-link text-dark" id="myProfileLink" asp-area="" asp-controller="User" asp-action="Details">My Profile</a>
                         <form method="post" asp-action="LogOut" asp-controller="Account" class="form-inline">
                         <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                         </form>

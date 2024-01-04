@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Details";
+
+}
+@model CVProjekt1._0.ViewModels.UserInfoViewModel
+
+<ul>
+    <li><a asp-controller="User" asp-action="UserInfo">User Info</a></li>
+	<li><a asp-controller="User" asp-action="Edit">Edit</a></li>
+	<li><a asp-controller="User" asp-action="ChangePassword">Change Password</a></li>
+</ul>
+
+<ul>
+    <h2>User Info</h2>
+
+    <li>
+        <h3>Username:</h3>
+        <p>@Model.UserName</p>
+    </li>
+    <li>
+        <h3>Email:</h3>
+		<p>@Model.Email</p>
+    </li>
+    <li>
+        <h3>First Name:</h3>
+		<p>@Model.FirstName</p>
+    </li>
+    <li>
+        <h3>Last Name:</h3>
+        <p>@Model.LastName</p>
+    </li>
+    <li>
+        <h3>Phone Number:</h3>
+		<p>@Model.PhoneNumber</p>
+    </li>
+    <li>
+        <h3>Address:</h3>
+		<p>@Model.Address</p>
+    </li>
+    <li>
+        <h3>City:</h3>
+        <p>@Model.City</p>
+    </li>
+</ul>
+
+<form asp-controller="User" asp-action="Edit" method="get">
+    <button type="submit" class="btn btn-primary">Edit Profile</button>
+</form>
+
+@* <table class="table">
+    <thead>
+        <td>Namn</td>
+        <td>Email</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Phone Number</td>
+        <td>Address</td>
+        <td>City</td>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.UserName</td>
+                <td>@Model.Email</td>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.PhoneNumber</td>
+                <td>@Model.Address</td>
+                <td>@Model.City</td>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    //<td><a asp-action="Remove" asp-controller="Bird" asp-route-id="@Model.UserName">Radera</a></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table> *@
