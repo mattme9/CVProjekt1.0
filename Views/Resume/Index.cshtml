@@ -1,0 +1,42 @@
+﻿@model CVProjekt1._0.Models.User
+
+<div>
+    <h2>My Resume</h2>
+
+    @if (Model != null && Model.Resume != null)
+    {
+        <div class="resume-container">
+            <div class="resume-experience-container">
+                <h3>Experience and background:</h3>
+                <p></p>
+            </div>
+
+            <div class="resume-experience-container">
+                <h3>Education:</h3>
+                <p></p>
+            </div>
+
+            <div class="resume-experience-container">
+                <h3>Skills:</h3>
+                <p></p>
+            </div>
+
+            <div class="resume-container-text">
+                <h3>About me:</h3>
+                <p></p>
+
+                <div class="resume-project-container">
+                    <!-- Eventuell ytterligare kod för projektcontainer här -->
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="empty-resume">
+            <h4>Looks like you haven't created a resume yet. Let's get you started.</h4>
+
+            <a asp-controller="Resume" asp-action="Create" class="btn btn-primary">Create Resume</a>
+        </div>
+    }
+</div>
