@@ -7,11 +7,6 @@
 }
 @model CVProjekt1._0.ViewModels.UserInfoViewModel
 
-<ul>
-    <li><a asp-controller="User" asp-action="UserInfo">User Info</a></li>
-	<li><a asp-controller="User" asp-action="Edit">Edit</a></li>
-	<li><a asp-controller="User" asp-action="ChangePassword">Change Password</a></li>
-</ul>
 
 <ul>
     <h2>User Info</h2>
@@ -46,10 +41,20 @@
     </li>
 </ul>
 
-<form asp-controller="User" asp-action="Edit" method="get">
+<form asp-controller="User" asp-action="Edit">
     <button type="submit" class="btn btn-primary">Edit Profile</button>
 </form>
-
+<form asp-controller="User" asp-action="ChangePassword">
+    <button type="submit" class="btn btn-primary">Change Password</button>
+</form>
+<h3>Upload Profile Picture</h3>
+<form asp-controller="User" asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="profilePicture" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload Picture</button>
+</form>
+<img src="@Model.ProfilePicturePath" alt="Profile Picture" class="img-fluid" />
 @* <table class="table">
     <thead>
         <td>Namn</td>
