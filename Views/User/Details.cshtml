@@ -8,12 +8,6 @@
 @model CVProjekt1._0.ViewModels.UserInfoViewModel
 
 <ul>
-    <li><a asp-controller="User" asp-action="UserInfo">User Info</a></li>
-	<li><a asp-controller="User" asp-action="Edit">Edit</a></li>
-	<li><a asp-controller="User" asp-action="ChangePassword">Change Password</a></li>
-</ul>
-
-<ul>
     <h2>User Info</h2>
 
     <li>
@@ -46,8 +40,11 @@
     </li>
 </ul>
 
-<form asp-controller="User" asp-action="Edit" method="get">
+<form asp-controller="User" asp-action="Edit">
     <button type="submit" class="btn btn-primary">Edit Profile</button>
+</form>
+<form asp-controller="User" asp-action="ChangePassword">
+    <button type="submit" class="btn btn-primary">Change Password</button>
 </form>
 
 @* <table class="table">
