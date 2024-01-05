@@ -8,5 +8,10 @@ namespace CVProjekt1._0.Controllers
         {
             return View();
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
