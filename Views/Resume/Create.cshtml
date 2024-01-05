@@ -1,0 +1,34 @@
+﻿@model CVProjekt1._0.Models.Resume
+
+@{
+    ViewBag.Title = "Create Resume";
+}
+
+<h2>Create a New Resume</h2>
+
+@using (Html.BeginForm("Create", "Resume", FormMethod.Post))
+{
+  
+    <div>
+        <label>Education:</label>
+        <textarea asp-for="Educations" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <label>Skills:</label>
+        <textarea asp-for="Skills" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <label>Experience:</label>
+        <textarea asp-for="Experiences" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <label>Description:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Save Resume</button>
+}
