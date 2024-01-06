@@ -15,5 +15,10 @@ namespace CVProjekt1._0.Models
 
         [ForeignKey(nameof(ResumeId))]
         public virtual Resume Resume { get; set; }
+
+        public static implicit operator string(Experience v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

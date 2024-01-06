@@ -8,27 +8,41 @@
 
 @using (Html.BeginForm("Create", "Resume", FormMethod.Post))
 {
-  
-    <div>
-        <label>Education:</label>
-        <textarea asp-for="Educations" class="form-control"></textarea>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Education:</label>
+            <textarea asp-for="Educations" class="form-control small-textarea"></textarea>
+        </div>
     </div>
 
-    <div>
-        <label>Skills:</label>
-        <textarea asp-for="Skills" class="form-control"></textarea>
+    <button type="submit" name="action" value="AddEducation" class="btn btn-primary mt-2">Add education</button>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label>Skills:</label>
+            <textarea asp-for="Skills" class="form-control small-textarea"></textarea>
+        </div>
     </div>
 
-    <div>
-        <label>Experience:</label>
-        <textarea asp-for="Experiences" class="form-control"></textarea>
+    <button type="submit" name="action" value="AddSkill" class="btn btn-primary mt-2">Add skill</button>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label>Experience:</label>
+            <input type="text" name="NewExperience" class="form-control" />
+        </div>
     </div>
 
-    <div>
-        <label>Description:</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+    <button type="submit" name="action" value="AddExperience" class="btn btn-primary mt-2">Add experience</button>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label>About me:</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
     </div>
 
+    <button type="submit" name="action" value="SaveAboutMe" class="btn btn-primary mt-2">Save "About me:"</button>
 
-    <button type="submit" class="btn btn-primary">Save Resume</button>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Resume" asp-action="Index">Return to resume</a>
 }

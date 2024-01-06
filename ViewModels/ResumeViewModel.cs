@@ -14,6 +14,10 @@ namespace CVProjekt1._0.ViewModels
         public string ShortenedDescription { get; set; }
         public List<Skill> Skills { get; set; }
         public User User { get; set; }
+
+        public Education EducationDetail { get; set; }
+        public Experience ExperienceDetail { get; set; }
+        public Skill SkillDetail { get; set; }
     }
 
     
