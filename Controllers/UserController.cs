@@ -147,5 +147,18 @@ namespace CVProjekt1._0.Controllers
             }
             return View(userChangePasswordView);
         }
+
+        public async Task<IActionResult> UploadProfilePicture(IFormFile profilePicture)
+        {
+            var imagePath = Path.Combine("wwwroot", "images", "profilePictures", profilePicture.FileName);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                await profilePicture.CopyToAsync(stream);
+            }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            user.ProfilePicturePath = "/images/profilePictures/" + profilePicture.FileName;
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction("Details");
+        }
     }
 }
