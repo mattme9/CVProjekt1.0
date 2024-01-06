@@ -63,30 +63,50 @@ public class ResumeController : Controller
 			_context.Resumes.Add(existingResume);
 		}
 
-		switch (action)
-		{
-			case "AddEducation":
-				
-				break;
-			case "AddSkill":
-				
-				break;
-			case "AddExperience":
-				
-				break;
-			case "SaveAboutMe":
-				
-				existingResume.Description = model.Description;
-				break;
-			default:
-				
-				break;
-		}
+        switch (action)
+        {
+            case "AddEducation":
+                Education newEducation = new Education
+                {
+                    ResumeId = existingResume.ResumeId,
+                };
+                _context.Educations.Add(newEducation);
+                break;
 
-		_context.SaveChanges();
+            case "AddSkill":
+                Skill newSkill = new Skill
+                {
+                    ResumeId = existingResume.ResumeId,
+                };
+                _context.Skills.Add(newSkill);
+                break;
 
-		return RedirectToAction("Index");
-	}
+            case "AddExperience":
+                var newExperience = new Experience
+                {
+                    ResumeId = existingResume.ResumeId,
+                    ExperienceDescription = model.NewExperience
+                };
+                existingResume.Experiences.Add(newExperience);
+
+                _context.Experiences.Add(newExperience);
+                _context.SaveChanges();
+
+                break;
+
+
+            case "SaveAboutMe":
+                existingResume.Description = model.Description;
+                break;
+
+            default:
+                break;
+        }
+
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
 
 
 }
