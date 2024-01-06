@@ -45,8 +45,12 @@ namespace CVProjekt1._0.TestData
         {
             return new List<Project>
             {
-                new Project { ProjectId = 1, Title = "Web Application Development", Description = "Developing a web application", CreatorId = "1" },
-                new Project { ProjectId = 2, Title = "Business Strategy Planning", Description = "Planning business strategies", CreatorId = "2" }
+                new Project { ProjectId = 1, Title = "InnovateHub: Empowering Collaboration for Innovative Solutions", 
+                    Description = "InnovateHub is a dynamic platform that brings together creative minds from diverse backgrounds to collaborate on cutting-edge projects. Whether you're a developer, designer, or business strategist, join us in shaping the future. Explore exciting challenges, share your expertise, and contribute to building solutions that make a positive impact. Together, let's redefine innovation!", 
+                    CreatorId = "1" },
+                new Project { ProjectId = 2, Title = "GreenScape: Sustainable Living App", 
+                    Description = "GreenScape is an innovative mobile application aimed at promoting sustainable living practices. This project invites users to adopt eco-friendly habits, track their environmental impact, and connect with like-minded individuals. From carbon footprint tracking to sharing eco-tips, GreenScape empowers users to make positive contributions towards a greener planet. Join us on this journey towards a sustainable future!", 
+                    CreatorId = "2" }
             };
         }
 

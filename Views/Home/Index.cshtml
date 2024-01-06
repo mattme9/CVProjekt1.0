@@ -6,8 +6,22 @@
 @model HomePageViewModel;
 
 <div class="py-5 text-center">
-    <h2>Discover A Variety Of Resumes</h2>
-    <p class="lead">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
+    <h1 class="mb-4 display-3">Embark on a Journey of Innovation and Collaboration</h1>
+    <p class="lead mb-4 fs-4">
+        Explore our projects and learn about the exciting developments. Discover the innovative solutions and contributions made by our team.
+        Users have the opportunity to sign up and contribute their skills to this project. Join us on this journey of collaboration and achievement.
+    </p>
+    <div class="project-details">
+        <p class="lead mb-3 fs-5"><strong>Our latest project is about @Model.LatestProject.Title</strong></p>
+        <a>
+            <button type="submit" class="btn btn-primary">Learn More</button>
+        </a>
+    </div>
+</div>
+
+<div class="py-5 text-center">
+    <h1 class="mb-4 display-3">Discover A Variety Of Resumes</h1>
+    <p class="lead mb-4 fs-4">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
 </div>
 
 <div class="row mb-2">
@@ -20,25 +34,23 @@
                     <h3 class="mb-0">
                         <a class="text-dark" href="#"></a>
                     </h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">@resume.Description</p>
+                    <div class="mb-1 text-muted"></div>
+                    <p class="card-text mb-auto">@resume.ShortenedDescription
+                        <a href="#">Continue Reading</a>
+                    </p>
                     <ul>
                         @foreach (var skill in resume.Skills)
                         {
-                            <li>@skill.SkillName: @skill.SkillDescription</li>
+                            <li style="list-style-type: none">@skill.SkillName: @skill.SkillDescription</li>
                         }
                     </ul>
+                    <a asp-controller="User" asp-action="Details2" asp-route-id="@resume.User">
+                        <button type="submit" class="btn btn-primary">Visit Profile</button>
+                    </a>
                 </div>
-                <img class="card-img-right flex-auto d-none d-md-block" 
-                       src="resume.User.ProfilePicturePath" 
-                  data-src="holder.js/200x250?theme=thumb" 
-                       alt="Card image cap">
                     
             </div>
         </div>
     }
 </div>
 
-<h2>Most Recent Project</h2>
-<p>Title: @Model.LatestProject.Title</p>
-<p>Description: @Model.LatestProject.Description</p>

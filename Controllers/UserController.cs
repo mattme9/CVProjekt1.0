@@ -2,6 +2,8 @@
 using CVProjekt1._0.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVProjekt1._0.Controllers
 {
@@ -14,6 +16,58 @@ namespace CVProjekt1._0.Controllers
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowSearchResult(string SearchString)
+        {
+            if (string.IsNullOrWhiteSpace(SearchString))
+            {
+                return View("ShowSearchForm");
+            }
+
+            var searchResults = await _context.Users
+                .Where(u => u.UserName
+                .Contains(SearchString) || u.Resume.Skills.Any(s => s.SkillName.Contains(SearchString)))
+                .ToListAsync();
+
+            if (searchResults == null)
+            { 
+                return View("ShowSearchForm");
+            }
+
+            return View("UserSearchResult", searchResults);
+        }
+
+        [ActionName("Details2")]
+        public IActionResult Details(string id)
+        {
+            var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.isPrivate && user.UserName != User.Identity.Name)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            UserInfoViewModel viewModel = new UserInfoViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country
+            };
+            return View(viewModel);
         }
 
         public IActionResult Details()

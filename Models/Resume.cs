@@ -4,7 +4,6 @@ namespace CVProjekt1._0.Models
 {
     public class Resume
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ResumeId { get; set; }
         public string UserId { get; set; } //Främmande nyckel
         public string Description { get; set; }

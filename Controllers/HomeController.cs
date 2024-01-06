@@ -10,12 +10,12 @@ namespace CVProjekt1._0.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly CVContext _cvContext;
+        private readonly CVContext _context;
 
-        public HomeController(ILogger<HomeController> logger, CVContext cvContext)
+        public HomeController(ILogger<HomeController> logger, CVContext context)
         {
-            _logger = logger;            
-            _cvContext = cvContext;
+            _logger = logger;
+            _context = context;
 
         }
 
@@ -28,17 +28,28 @@ namespace CVProjekt1._0.Controllers
 
             var viewModel = new HomePageViewModel
             {
-                SelectedResumes = selectedResumes,
+                SelectedResumes = selectedResumes.Select(r => new ResumeViewModel
+                {
+                    ShortenedDescription = ShortenDescription(r.Description, 15),
+                    Skills = r.Skills.ToList(),
+                    User = r.User
+                }).ToList(),
                 LatestProject = latestProject,
                 Users = users
             };
             return View(viewModel);
         }
 
-        public IActionResult Privacy()
+        private string ShortenDescription(string description, int maxWords)
         {
-            return View();
+            var words = description.Split(' ');
+            if (words.Length > maxWords)
+            {
+                description = string.Join(' ', words.Take(maxWords)) + "...";
+            }
+            return description;
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,0 +1,11 @@
+﻿@model List<CVProjekt1._0.Models.User>
+
+<h2>Search Results</h2>
+
+<ul>
+    @foreach (var user in Model)
+    {
+        <li style="list-style: none">@user.UserName</li>
+    }
+</ul>
+<a asp-action="ShowSearchForm">Back To Search</a>
