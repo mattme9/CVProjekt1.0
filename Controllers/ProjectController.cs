@@ -22,7 +22,7 @@ namespace CVProjekt1._0.Controllers
         }
         public IActionResult Create(CreateProjectViewModel viewModel)
         {
-            return View("_Create", viewModel);
+            return View("_Create");
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace CVProjekt1._0.Controllers
                 _context.Projects.Add(newProject);
                 _context.SaveChanges();
 
-                return RedirectToAction("_Success"); // Eller den vy du vill visa efter att projektet skapats
+                return View("_Success"); // Eller den vy du vill visa efter att projektet skapats
             }
 
             return View(viewModel); // Om modellen inte är giltig, returnera vymodellen för att visa fel
@@ -96,8 +96,12 @@ namespace CVProjekt1._0.Controllers
         public IActionResult List()
         {
             var projects = _context.Projects.ToList();
+            var viewModel = new ListProjectViewModel
+            {
+                Projects = projects,
+            };
 
-            return View("_List", projects);
+            return View("_List", viewModel);
         }
     }
 }
