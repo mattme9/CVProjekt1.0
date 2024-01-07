@@ -53,12 +53,23 @@ public class ResumeController : Controller
         return View(viewModel);
     }
 
-
-
-
     public IActionResult Create()
     {
-        return View();
+        var user = _userManager.GetUserAsync(User).Result;
+
+        var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
+
+        if (existingResume == null)
+        {
+            existingResume = new Resume
+            {
+                UserId = user.Id
+            };
+
+            _context.Resumes.Add(existingResume);
+        }
+
+        return View(existingResume);
     }
 
     [HttpPost]
@@ -80,12 +91,15 @@ public class ResumeController : Controller
             _context.Resumes.Add(existingResume);
         }
 
+        string successMessage = "";
+
         switch (action)
         {
             case "AddEducation":
                 if (!string.IsNullOrEmpty(model.Education))
                 {
                     existingResume.Education = model.Education;
+                    successMessage = "Education updated";
                 }
                 break;
 
@@ -93,6 +107,7 @@ public class ResumeController : Controller
                 if (!string.IsNullOrEmpty(model.Skill))
                 {
                     existingResume.Skill = model.Skill;
+                    successMessage = "Skills updated";
                 }
                 break;
 
@@ -100,23 +115,27 @@ public class ResumeController : Controller
                 if (!string.IsNullOrEmpty(model.Experience))
                 {
                     existingResume.Experience = model.Experience;
+                    successMessage = "Experience updated";
                 }
                 break;
 
             case "SaveAboutMe":
                 existingResume.Description = model.Description;
+                successMessage = "About me updated";
                 break;
 
             default:
-                
                 break;
         }
 
         _context.SaveChanges();
 
-        return RedirectToAction("Index");
+        TempData["Message"] = successMessage + " successfully.";
+
+        return RedirectToAction("Create");
     }
 
 
-
 }
+
+
