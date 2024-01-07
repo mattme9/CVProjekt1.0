@@ -44,10 +44,10 @@ namespace CVProjekt1._0.Controllers
             return View("UserSearchResult", searchResults);
         }
 
-        [ActionName("Details2")]
-        public IActionResult Details(string id)
+        public IActionResult GoToUser(string id)
         {
-            var user = _context.Users.Find(id);
+            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+
             if (user == null)
             {
                 return NotFound();
@@ -67,7 +67,7 @@ namespace CVProjekt1._0.Controllers
                 City = user.City,
                 Country = user.Country
             };
-            return View(viewModel);
+            return View("Details", viewModel);
         }
 
         public IActionResult Details()

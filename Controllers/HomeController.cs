@@ -21,10 +21,11 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult Index()
         {
-            var selectedResumes = TestDataGenerator.GetResumes().ToList();
-            var latestProject = TestDataGenerator.GetProjects()
-                .OrderByDescending(p => p.ProjectId).FirstOrDefault();
-            var users = TestDataGenerator.GetUsers();
+            var selectedResumes = _context.Resumes.ToList(); 
+            var latestProject = _context.Projects
+                .OrderByDescending(p => p.ProjectId)
+                .FirstOrDefault();
+            var users = _context.Users.ToList();
 
             var viewModel = new HomePageViewModel
             {
