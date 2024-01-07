@@ -1,35 +1,32 @@
 ﻿@model CVProjekt1._0.ViewModels.ResumeViewModel
 
-<div>
-	<h2>My Resume</h2>
+<div class="resume-view">
+    <h2 class="resume-title">My Resume</h2>
 
-	<div class="resume-container">
-		
+    <div class="resume-container">
 
-		<div class="resume-container-text">
+        <div>
+            <div class="resume-index-container">
+                <h3 class="resume-index-title">Education:</h3>
+                <pre class="resume-index-content">@Model.Education</pre>
+            </div>
 
-			<div class="resume-text-container">
-				<h3>Education:</h3>
-				<p>@Model.Education</p>
-			</div>
-			<div class="resume-text-container">
-				<h3>Experience and background:</h3>
-				<p>@Model.Experience</p>
+            <div class="resume-index-container">
+                <h3 class="resume-index-title">Experience and background:</h3>
+                <pre class="resume-index-content">@Model.Experience</pre>
+            </div>
 
-			</div>
-			<div class="resume-text-container">
+            <div class="resume-index-container">
+                <h3 class="resume-index-title">Skills:</h3>
+                <pre class="resume-index-content">@Model.Skill</pre>
+            </div>
 
-				<h3>Skills:</h3>
-				<p>@Model.Skill</p>
+            <div class="resume-index-container">
+                <h3 class="resume-index-title">About me:</h3>
+                <pre class="resume-index-content">@Model.Description</pre>
+            </div>
+        </div>
 
-			</div>
-			<div class="resume-text-container">
-				<h3>About me:</h3>
-				<p>@Model.Description</p>
-			</div>
-
-		</div>
-
-		<a class="nav-link text-dark" asp-area="" asp-controller="Resume" asp-action="Create">Update Resume</a>
-	</div>
+        <a class="nav-link text-dark update-link" asp-area="" asp-controller="Resume" asp-action="Create">Update Resume</a>
+    </div>
 </div>

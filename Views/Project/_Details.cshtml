@@ -2,6 +2,28 @@
 @{
     ViewData["Title"] = "Project Details";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to display a projects details.</p>
+<h1>@ViewData["Title"]</h1>
+<p>Use this page to display a project's details.</p>
+
+<div style="margin-top: 2rem;">
+    <div style="border: 2px solid #000; padding: 1rem;">
+        <h3>Title</h3>
+        <p>@Model.Title</p>
+    </div>
+
+    <div style="margin-top: 2rem; border: 2px solid #000; padding: 1rem;">
+        <h3>Description</h3>
+        <p>@Model.Description</p>
+    </div>
+
+    <div style="margin-top: 2rem; border: 2px solid #000; padding: 1rem;">
+        <h3>Desired Manpower</h3>
+        <p>@Model.DesiredManpower</p>
+    </div>
+
+    <div style="margin-top: 2rem; border: 2px solid #000; padding: 1rem;">
+        <h3>Creator ID</h3>
+        <p>@Model.CreatorId</p>
+    </div>
+</div>

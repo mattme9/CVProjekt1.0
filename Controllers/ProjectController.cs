@@ -2,6 +2,8 @@
 using CVProjekt1._0.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 
 namespace CVProjekt1._0.Controllers
 {
@@ -18,23 +20,36 @@ namespace CVProjekt1._0.Controllers
         {
             return View();
         }
-
         public IActionResult Create(CreateProjectViewModel viewModel)
         {
-            /*if (ModelState.IsValid)
+            return View("_Create", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateProject(CreateProjectViewModel viewModel)
+        {
+            if (ModelState.IsValid)
             {
+                // Hämta inloggad användares ID
+                var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Skapa nytt Project-objekt och fyll det med värden från vymodellen
                 var newProject = new Project
                 {
-                    // Här har vi metoder som skapar projektets fält genom viewModel-data.
+                    Title = viewModel.Title,
+                    Description = viewModel.Description,
+                    DesiredManpower = (int)viewModel.DesiredManpower,
+                    CreatorId = creatorId // Användarens ID som skapar projektet
                 };
 
+                // Lägg till och spara det nya projektet i databasen
                 _context.Projects.Add(newProject);
                 _context.SaveChanges();
 
-                return RedirectToAction("List");
-            }*/
+                return RedirectToAction("_Success"); // Eller den vy du vill visa efter att projektet skapats
+            }
 
-            return View("_Create", viewModel);
+            return View(viewModel); // Om modellen inte är giltig, returnera vymodellen för att visa fel
         }
 
         public IActionResult Delete(int projectId)
@@ -51,11 +66,21 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult Details(int projectId)
         {
-            var thisProject = _context.Projects.Include(p => p.User).FirstOrDefault(p => p.ProjectId == projectId);
+            var thisProject = _context.Projects
+                .OrderByDescending(p => p.ProjectId)
+                .FirstOrDefault();
+            if (thisProject == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = new ProjectDetailsViewModel
             {
                 ProjectId = thisProject.ProjectId,
-                User = thisProject.User
+                Title = thisProject.Title,
+                Description = thisProject.Description,
+                DesiredManpower = thisProject.DesiredManpower,
+                CreatorId = thisProject.CreatorId
             };
 
             return View("_Details", viewModel);

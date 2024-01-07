@@ -24,3 +24,35 @@ body {
 .myProfileLink{
     margin-right:auto;
 }
+
+/* Resume Styles */
+
+.resume-view {
+    padding: 20px;
+}
+
+.resume-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.resume-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.resume-index-container {
+    margin-bottom: 20px;
+}
+
+.resume-index-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+.resume-index-content {
+    white-space: pre-line;
+    font-family: 'Montserrat', sans-serif;
+}
