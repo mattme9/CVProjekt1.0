@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace CVProjekt1._0.Models
 {
     public class User : IdentityUser
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string? UserId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

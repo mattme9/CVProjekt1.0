@@ -1,39 +1,35 @@
 ﻿@model CVProjekt1._0.ViewModels.ResumeViewModel
 
 <div>
-    <h2>My Resume</h2>
+	<h2>My Resume</h2>
 
-    <div class="resume-container">
-        <!-- Övriga delar av din vy -->
+	<div class="resume-container">
+		
 
-        <div class="resume-container-text">
-            
+		<div class="resume-container-text">
 
-            <!-- Visa utbildningar -->
-            <h3>Education:</h3>
-            <ul>
-               
-            </ul>
+			<div class="resume-text-container">
+				<h3>Education:</h3>
+				<p>@Model.Education</p>
+			</div>
+			<div class="resume-text-container">
+				<h3>Experience and background:</h3>
+				<p>@Model.Experience</p>
 
-            <!-- Visa erfarenheter -->
-            <h3>Experience and background:</h3>
-            <ul>
-             
-            </ul>
+			</div>
+			<div class="resume-text-container">
 
-            <h3>Skills:</h3>
-            <ul>
-            </ul>
+				<h3>Skills:</h3>
+				<p>@Model.Skill</p>
 
-            <h3>About me:</h3>
-            <p>@Model.Description</p>
+			</div>
+			<div class="resume-text-container">
+				<h3>About me:</h3>
+				<p>@Model.Description</p>
+			</div>
 
-            <div class="resume-project-container">
-                <!-- Övriga delar av din vy -->
-            </div>
-        </div>
+		</div>
 
-        <a class="nav-link text-dark" asp-area="" asp-controller="Resume" asp-action="Create">Update Resume</a>
-
-    </div>
+		<a class="nav-link text-dark" asp-area="" asp-controller="Resume" asp-action="Create">Update Resume</a>
+	</div>
 </div>
