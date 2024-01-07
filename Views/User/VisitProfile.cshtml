@@ -3,12 +3,6 @@
     ViewBag.Title = "User Profile";
 }
 
-<style>
-    .main-section{ 
-        margin-top: 5rem;
-    }
-</style>
-
 @inject UserManager<User> _userManager;
 
 @{
@@ -29,7 +23,7 @@
     </div>
 }
 
-<div class="main-section">
+<div class="row mt-5">
     <div class="row mt-2">
         <div class="col-sm-3 col-md-2 col-5">
             <p class="lead">Full Name</p>
@@ -131,20 +125,40 @@
         </div>
     </div>
     <hr />
+</div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12 bg-body-tertiary text-center overflow-hidden">
-                <div class="my-3 p-3">
-                    <h2 class="display-5">Resume</h2>
-                </div>
-                <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                    @if(Model.Resume != null)
-                    {
-                        <p style="color: white">@Model.Resume.Description</p>
-                    }
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 bg-body-tertiary text-center overflow-hidden">
+            <div class="my-3 p-3">
+                <h2 class="display-5">Resume</h2>
+            </div>
+            <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+                @if (Model.Resume != null)
+                {
+                    <p style="color: white">@Model.Resume.Description</p>
+                }
             </div>
         </div>
     </div>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        @if (Model.Projects != null)
+        {
+            @foreach (var project in Model.Projects)
+            {
+                <div class="col-md-6 bg-body-tertiary text-center overflow-hidden">
+                    <div class="my-3 p-3">
+                        <h2 class="display-5">Project</h2>
+                    </div>
+                    <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+                        <p style="color: white">@project.Description</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
