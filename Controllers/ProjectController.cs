@@ -21,7 +21,7 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult Create(CreateProjectViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 var newProject = new Project
                 {
@@ -32,7 +32,7 @@ namespace CVProjekt1._0.Controllers
                 _context.SaveChanges();
 
                 return RedirectToAction("List");
-            }
+            }*/
 
             return View("_Create", viewModel);
         }

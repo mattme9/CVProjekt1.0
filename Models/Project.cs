@@ -12,6 +12,7 @@ namespace CVProjekt1._0.Models
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
+        public int DesiredManpower { get; set; }
         public string? CreatorId { get; set; }
 
         public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();

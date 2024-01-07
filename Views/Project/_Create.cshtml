@@ -1,7 +1,29 @@
 ﻿@model CVProjekt1._0.ViewModels.CreateProjectViewModel
 @{
-    ViewData["Title"] = "Create Project";
+    ViewData["Title"] = "Create New Project";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to create a new project</p>
+<h1 style="text-align: center; border-bottom: 1px solid #000; margin: 0 5rem 2rem 5rem;">Skapa Nytt Projekt</h1>
+
+<div style="margin-left: 5rem;">
+    <form asp-action="Create" asp-controller="Project" method="post">
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Nytt projekt</p>
+            <input asp-for="Title" placeholder="Title" style="width: 300px; margin-bottom: 1rem;">
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Description</p>
+            <textarea asp-for="Description" placeholder="Description" style="width: 300px; height: 150px;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Desired Manpower</p>
+            <select asp-for="DesiredManpower" asp-items="@Html.GetEnumSelectList<CVProjekt1._0.ViewModels.DesiredManpowerEnum>()" style="width: 300px;">
+                <option value="">Select desired manpower</option>
+            </select>
+        </div>
+
+        <button type="submit" style="float: right; margin-right: 5rem;">Skapa</button>
+    </form>
+</div>
