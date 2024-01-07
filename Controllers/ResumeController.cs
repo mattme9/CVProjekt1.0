@@ -16,20 +16,38 @@ public class ResumeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        // Hämta aktuell användare
+        
         var user = await _userManager.GetUserAsync(User);
 
-        // Hämta beskrivningen från databasen baserat på användar-ID
+      
         var description = _context.Resumes
             .Where(r => r.UserId == user.Id)
             .Select(r => r.Description)
             .FirstOrDefault();
 
-        // Skapa ett ViewModel för att skicka data till vyn
-        var viewModel = new ResumeViewModel
+        var education = _context.Resumes
+			.Where(r => r.UserId == user.Id)
+			.Select(r => r.Education)
+			.FirstOrDefault();
+
+		var skill = _context.Resumes
+			.Where(r => r.UserId == user.Id)
+			.Select(r => r.Skill)
+			.FirstOrDefault();
+
+		var experience = _context.Resumes
+			.Where(r => r.UserId == user.Id)
+			.Select(r => r.Experience)
+			.FirstOrDefault();
+
+		
+		var viewModel = new ResumeViewModel
         {
             Description = description,
-            // ... andra egenskaper du vill visa på sidan
+            Education = education,
+            Skill = skill,
+            Experience = experience
+            
         };
 
         return View(viewModel);
@@ -43,50 +61,62 @@ public class ResumeController : Controller
         return View();
     }
 
-	[HttpPost]
-	public IActionResult Create(Resume model, string action)
-	{
-		var user = _userManager.GetUserAsync(User).Result;
+    [HttpPost]
+    public IActionResult Create(Resume model, string action)
+    {
+        var user = _userManager.GetUserAsync(User).Result;
 
-		model.UserId = user.Id;
+        model.UserId = user.Id;
 
-		
-		var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
+        var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
 
-		if (existingResume == null)
-		{
-			existingResume = new Resume
-			{
-				UserId = user.Id
-			};
+        if (existingResume == null)
+        {
+            existingResume = new Resume
+            {
+                UserId = user.Id
+            };
 
-			_context.Resumes.Add(existingResume);
-		}
+            _context.Resumes.Add(existingResume);
+        }
 
-		switch (action)
-		{
-			case "AddEducation":
-				
-				break;
-			case "AddSkill":
-				
-				break;
-			case "AddExperience":
-				
-				break;
-			case "SaveAboutMe":
-				
-				existingResume.Description = model.Description;
-				break;
-			default:
-				
-				break;
-		}
+        switch (action)
+        {
+            case "AddEducation":
+                if (!string.IsNullOrEmpty(model.Education))
+                {
+                    existingResume.Education = model.Education;
+                }
+                break;
 
-		_context.SaveChanges();
+            case "AddSkill":
+                if (!string.IsNullOrEmpty(model.Skill))
+                {
+                    existingResume.Skill = model.Skill;
+                }
+                break;
 
-		return RedirectToAction("Index");
-	}
+            case "AddExperience":
+                if (!string.IsNullOrEmpty(model.Experience))
+                {
+                    existingResume.Experience = model.Experience;
+                }
+                break;
+
+            case "SaveAboutMe":
+                existingResume.Description = model.Description;
+                break;
+
+            default:
+                
+                break;
+        }
+
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+
 
 
 }
