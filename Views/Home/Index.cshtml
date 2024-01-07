@@ -1,9 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@inject UserManager<User> _userManager;
+@using System.Security.Claims;
 @using CVProjekt1._0.ViewModels;
+@using Microsoft.AspNetCore.Identity
 @model HomePageViewModel;
+
+@{
+    string currentUserId = _userManager.GetUserId(User);
+}
 
 <div class="py-5 text-center">
     <h1 class="mb-4 display-3">Embark on a Journey of Innovation and Collaboration</h1>
@@ -12,17 +18,41 @@
         Users have the opportunity to sign up and contribute their skills to this project. Join us on this journey of collaboration and achievement.
     </p>
     <div class="project-details">
-        <p class="lead mb-3 fs-5"><strong>Our latest project is about @Model.LatestProject.Title</strong></p>
-        <a>
-            <button type="submit" class="btn btn-primary">Learn More</button>
-        </a>
+        @if (Model.LatestProject != null)
+        {
+            <p class="lead mb-3 fs-5"><strong>Our latest project is about @Model.LatestProject.Title</strong></p>
+            <a asp-controller="Project" asp-action="Details" asp-route-id="@Model.LatestProject.ProjectId">
+                <button type="submit" class="btn btn-primary">Learn More</button>
+            </a>
+        }
+        else
+        {
+            <div>
+                <a asp-controller="Project" asp-action="Create">
+                    <button type="submit" class="btn btn-primary">Create The First Project</button>
+                </a>
+            </div>
+        }
     </div>
 </div>
 
-<div class="py-5 text-center">
-    <h1 class="mb-4 display-3">Discover A Variety Of Resumes</h1>
-    <p class="lead mb-4 fs-4">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
-</div>
+@if(Model.SelectedResumes != null && Model.SelectedResumes.Any())
+{
+    <div class="py-5 text-center">
+        <h1 class="mb-4 display-3">Discover A Variety Of Resumes</h1>
+        <p class="lead mb-4 fs-4">Browse through a collection of unique and skillful resumes. Each resume showcases individual expertise, experiences, and accomplishments. Discover the diverse talents and qualifications presented by our users.</p>
+    </div>
+}
+else
+{
+    <div class="py-5 text-center">
+        <h1 class="mb-4 display-3">No Resumes Yet</h1>
+        <p class="lead mb-4 fs-4">It looks like there are no resumes available at the moment. Be the first to showcase your skills and experiences!</p>
+        <a asp-controller="Resume" asp-action="Create">
+            <button type="submit" class="btn btn-primary">Add Your Resume</button>
+        </a>
+    </div>
+}
 
 <div class="row mb-2">
     @foreach (var resume in Model.SelectedResumes)
@@ -36,7 +66,8 @@
                     </h3>
                     <div class="mb-1 text-muted"></div>
                     <p class="card-text mb-auto">@resume.ShortenedDescription
-                        <a href="#">Continue Reading</a>
+                        <!--Här ska länk gå till cv't som visas-->
+                        <a asp-controller="Resume" asp-action="Index">Continue Reading</a>
                     </p>
                     <ul>
                         @foreach (var skill in resume.Skills)
@@ -44,13 +75,21 @@
                             <li style="list-style-type: none">@skill.SkillName: @skill.SkillDescription</li>
                         }
                     </ul>
-                    <a asp-controller="User" asp-action="Details2" asp-route-id="@resume.User">
-                        <button type="submit" class="btn btn-primary">Visit Profile</button>
-                    </a>
+                    @if (resume.User.isPrivate && currentUserId != resume.User.Id)
+                    {
+                        <p class="text-danger">This user's profile is private.</p>
+                    }
+                    else
+                    {
+                        <a asp-controller="User" asp-action="GoToUser" asp-route-id="@resume.User.UserId">
+                            <button type="submit" class="btn btn-primary">Visit Profile</button>
+                        </a>
+                    }
                 </div>
                     
             </div>
         </div>
     }
 </div>
+
 
