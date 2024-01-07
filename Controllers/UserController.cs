@@ -18,6 +18,23 @@ namespace CVProjekt1._0.Controllers
             _userManager = userManager;
         }
 
+        public async Task<IActionResult> SendMessage(string message, string receiverId)
+        {
+            var sender = await _userManager.FindByNameAsync(User.Identity.Name);
+            var receiver = _context.Users.FirstOrDefault(u => u.UserId == receiverId);
+
+            var newMessage = new Message
+            {
+                Sender = sender,
+                Receiver = receiver,
+                MessageText = message,
+                IsRead = false,
+            };
+            _context.Add(message);
+            _context.SaveChanges();
+            return RedirectToAction("VisitProfile");
+        }
+
         public async Task<IActionResult> ShowSearchForm()
         {
             return View();
@@ -44,10 +61,11 @@ namespace CVProjekt1._0.Controllers
             return View("UserSearchResult", searchResults);
         }
 
-        [ActionName("Details2")]
-        public IActionResult Details(string id)
+        public IActionResult GoToUser(string id)
         {
-            var user = _context.Users.Find(id);
+            var user = _context.Users.Include("Resume").FirstOrDefault(u => u.UserId == id);
+            var projects = _context.Projects.Where(p => p.User == user).ToList();
+
             if (user == null)
             {
                 return NotFound();
@@ -56,18 +74,17 @@ namespace CVProjekt1._0.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            UserInfoViewModel viewModel = new UserInfoViewModel
+            VisitProfileViewModel viewModel = new VisitProfileViewModel
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Address = user.Address,
-                City = user.City,
-                Country = user.Country
+                ProfilePicture = user.ProfilePicturePath,
+                Resume = user.Resume,
+                Projects = projects,
+                UserId = user.Id,
+                UserName = user.UserName,
             };
-            return View(viewModel);
+            return View("VisitProfile", viewModel);
         }
 
         public IActionResult Details()
