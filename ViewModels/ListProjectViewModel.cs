@@ -7,4 +7,7 @@ namespace CVProjekt1._0.ViewModels
 	{
 		public List<Project> Projects { get; set; }
 	}
+
+
+
 }

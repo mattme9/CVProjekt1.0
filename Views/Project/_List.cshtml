@@ -18,20 +18,29 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center" style="border-bottom: 2px solid black; padding-bottom: 0.5rem; text-transform: uppercase; font-weight:540">
-                        <span style="font-size: 1.5em; font-weight:550;">@project.Title.Substring(0, 1)</span>@project.Title.Substring(1)
+                    <h5 class="card-title text-center" style="border-bottom: 2px solid black; padding-bottom: 0.5rem; text-transform: uppercase; font-weight: 540;">
+                        <span style="font-size: 1.5em; font-weight: 550;">@project.Title.Substring(0, 1)</span>@project.Title.Substring(1)
                     </h5>
                     <p class="card-text">Description: @project.Description</p>
                     <p class="card-text">Desired Manpower: @project.DesiredManpower</p>
-
-                    <div style="margin-top: 1rem; text-align: right;">
-                        <a href="#" class="btn btn-primary">Participate</a>
-                    </div>
+                    @if (User.Identity.Name == project.CreatorId)
+                    {
+                        <div style="margin-top: 1rem; text-align: right;">
+                            <a asp-controller="Project" asp-action="Edit" asp-route-projectId="@project.ProjectId" class="btn btn-primary">Ändra</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="margin-top: 1rem; text-align: right;">
+                            <a href="#" class="btn btn-primary">Participate</a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     }
 </div>
+
 
 
 <div>

@@ -2,6 +2,28 @@
 @{
     ViewData["Title"] = "Edit Project";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to edit a selected project</p>
+<h1 style="text-align: center; border-bottom: 1px solid #000; margin: 0 5rem 2rem 5rem;">Redigera Projekt</h1>
+
+<div style="margin-left: 5rem;">
+    <form asp-action="EditProject" asp-controller="Project" method="post">
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Projekt</p>
+            <input asp-for="Title" placeholder="Title" style="width: 300px; margin-bottom: 1rem;">
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Beskrivning</p>
+            <textarea asp-for="Description" placeholder="Description" style="width: 300px; height: 150px;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <p style="font-weight: bold;">Önskad bemanning</p>
+            <select asp-for="DesiredManpower" asp-items="@Html.GetEnumSelectList<CVProjekt1._0.ViewModels.DesiredManpowerEnum>()" style="width: 300px;">
+                <option value="">Välj önskad bemanning</option>
+            </select>
+        </div>
+
+        <button type="submit" style="float: right; margin-right: 5rem;">Ändra</button>
+    </form>
+</div>
