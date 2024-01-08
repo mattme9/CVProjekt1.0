@@ -6,8 +6,6 @@ namespace CVProjekt1._0.Models
 {
     public class User : IdentityUser
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string? UserId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string ? Address { get; set; }

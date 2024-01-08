@@ -21,7 +21,7 @@ namespace CVProjekt1._0.Controllers
         public async Task<IActionResult> SendMessage(string message, string receiverId)
         {
             var sender = await _userManager.FindByNameAsync(User.Identity.Name);
-            var receiver = _context.Users.FirstOrDefault(u => u.UserId == receiverId);
+            var receiver = _context.Users.FirstOrDefault(u => u.Id == receiverId);
 
             var newMessage = new Message
             {
@@ -63,7 +63,7 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult GoToUser(string id)
         {
-            var user = _context.Users.Include("Resume").FirstOrDefault(u => u.UserId == id);
+            var user = _context.Users.Include("Resume").FirstOrDefault(u => u.Id == id);
             var projects = _context.Projects.Where(p => p.User == user).ToList();
 
             if (user == null)
