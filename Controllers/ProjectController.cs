@@ -87,9 +87,29 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult Edit(int projectId)
         {
-            var viewModel = new ProjectDetailsViewModel();
+            var thisProject = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
+
+            if (thisProject == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new ProjectDetailsViewModel
+            {
+                ProjectId = thisProject.ProjectId,
+                Title = thisProject.Title,
+                Description = thisProject.Description,
+                DesiredManpower = thisProject.DesiredManpower,
+                CreatorId = thisProject.CreatorId
+            };
 
             return View("_Edit", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditProject(int projectId, ProjectDetailsViewModel viewModel)
+        {
+            return View("_Edit");
         }
 
         public IActionResult List()

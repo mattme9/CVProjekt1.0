@@ -7,18 +7,22 @@
 
 <div style="margin-left: 5rem;">
     <form asp-action="EditProject" asp-controller="Project" method="post">
+
         <div style="margin-bottom: 2rem;">
             <p style="font-weight: bold;">Projekt</p>
+            <!-- Visa befintlig titel -->
             <input asp-for="Title" placeholder="Title" style="width: 300px; margin-bottom: 1rem;">
         </div>
 
         <div style="margin-bottom: 2rem;">
             <p style="font-weight: bold;">Beskrivning</p>
+            <!-- Visa befintlig beskrivning -->
             <textarea asp-for="Description" placeholder="Description" style="width: 300px; height: 150px;"></textarea>
         </div>
 
         <div style="margin-bottom: 2rem;">
             <p style="font-weight: bold;">Önskad bemanning</p>
+            <!-- Visa befintlig önskad bemanning -->
             <select asp-for="DesiredManpower" asp-items="@Html.GetEnumSelectList<CVProjekt1._0.ViewModels.DesiredManpowerEnum>()" style="width: 300px;">
                 <option value="">Välj önskad bemanning</option>
             </select>
