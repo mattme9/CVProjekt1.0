@@ -42,6 +42,10 @@ namespace CVProjekt1._0.Controllers
 
         private string ShortenDescription(string description, int maxWords)
         {
+            if (description == null)
+            {
+                return description;
+            }
             var words = description.Split(' ');
             if (words.Length > maxWords)
             {

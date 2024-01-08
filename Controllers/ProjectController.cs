@@ -66,7 +66,9 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult Details(int projectId)
         {
-            var thisProject = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
+            var thisProject = _context.Projects
+                .OrderByDescending(p => p.ProjectId)
+                .FirstOrDefault();
 
             if (thisProject == null)
             {
