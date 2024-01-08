@@ -1,4 +1,5 @@
-﻿@*
+﻿@using Microsoft.AspNetCore.Identity
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -6,7 +7,12 @@
 
 }
 @model CVProjekt1._0.ViewModels.UserInfoViewModel
+@inject UserManager<User> _userManager
 
+@{
+    var user = await _userManager.FindByNameAsync(User.Identity.Name);
+    var profilePicturePath = user?.ProfilePicturePath;
+}
 
 <ul>
     <h2>User Info</h2>
@@ -50,35 +56,11 @@
 <h3>Upload Profile Picture</h3>
 <form asp-controller="User" asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <input type="file" name="profilePicture" class="form-control-file" />
+        <input type="file" accept="image/*" name="profilePicture" class="form-control-file" />
     </div>
     <button type="submit" class="btn btn-primary">Upload Picture</button>
 </form>
-<img src="@Model.ProfilePicturePath" alt="Profile Picture" class="img-fluid" />
-@* <table class="table">
-    <thead>
-        <td>Namn</td>
-        <td>Email</td>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Phone Number</td>
-        <td>Address</td>
-        <td>City</td>
-    </thead>
-    <tbody>
-            <tr>
-                <td>@Model.UserName</td>
-                <td>@Model.Email</td>
-                <td>@Model.FirstName</td>
-                <td>@Model.LastName</td>
-                <td>@Model.PhoneNumber</td>
-                <td>@Model.Address</td>
-                <td>@Model.City</td>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    //<td><a asp-action="Remove" asp-controller="Bird" asp-route-id="@Model.UserName">Radera</a></td>
-                }
-            </tr>
-        }
-    </tbody>
-</table> *@
+@if (!string.IsNullOrEmpty(profilePicturePath))
+{
+    <img src="@Url.Content(profilePicturePath)" alt="Profile Picture" class="img-fluid" width="300px" height="400px" />
+}
