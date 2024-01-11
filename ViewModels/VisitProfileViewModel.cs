@@ -17,5 +17,6 @@ namespace CVProjekt1._0.ViewModels
         public List<string> ProjectTitle { get; set; }
         public string Message { get; set; }
         public List<ProjectDetailsViewModel> Projects { get; set; }
+        public bool IsAnonymous { get; set; }
     }
 }
