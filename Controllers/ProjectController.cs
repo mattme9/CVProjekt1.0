@@ -46,11 +46,25 @@ namespace CVProjekt1._0.Controllers
                 _context.Projects.Add(newProject);
                 _context.SaveChanges();
 
+                // Lägg till skaparens deltagande i det nya projektet
+                var newParticipation = new ProjectUser
+                {
+                    ProjectId = newProject.ProjectId,
+                    UserId = creatorId
+                };
+
+                _context.ProjectUsers.Add(newParticipation);
+                _context.SaveChanges();
+
+                // Visa bekräftelsemodal
+                TempData["ShowConfirmationModal"] = true;
+
                 return View("_Success"); // Eller den vy du vill visa efter att projektet skapats
             }
 
             return View(viewModel); // Om modellen inte är giltig, returnera vymodellen för att visa fel
         }
+
 
         public IActionResult Delete(int projectId)
         {
@@ -137,7 +151,42 @@ namespace CVProjekt1._0.Controllers
 			return View("_Edit", viewModel);
 		}
 
-		public IActionResult List()
+        [HttpPost]
+        public IActionResult Participate(int projectId)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Kolla om användaren redan deltar i projektet
+                var existingParticipation = _context.ProjectUsers
+                    .FirstOrDefault(pu => pu.ProjectId == projectId && pu.UserId == loggedInUserId);
+
+                if (existingParticipation == null)
+                {
+                    // Lägg till deltagande i databasen
+                    var newParticipation = new ProjectUser
+                    {
+                        ProjectId = projectId,
+                        UserId = loggedInUserId
+                    };
+
+                    _context.ProjectUsers.Add(newParticipation);
+                    _context.SaveChanges();
+
+                    TempData["ShowConfirmationModal"] = true;
+                }
+
+                // Lämplig omdirigering efter deltagande
+                return RedirectToAction("List");
+            }
+
+            // Om användaren inte är inloggad, omdirigera till inloggningssidan
+            return RedirectToAction("Login", "Account");
+        }
+
+
+        public IActionResult List()
         {
             var projects = _context.Projects.ToList();
             var viewModel = new ListProjectViewModel
