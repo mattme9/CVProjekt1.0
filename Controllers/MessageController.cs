@@ -17,7 +17,16 @@ namespace CVProjekt1._0.Controllers
             _context = context;
             _userManager = usermanager;
         }
+        public IActionResult Inbox()
+        {
+            var currentUser = _userManager.GetUserAsync(User).Result;
+            var messages = _context.Messages
+            .Where(m => m.ReceiverId == currentUser.Id)
+            .ToList();
 
+
+            return View(messages);
+        }
         public async Task<IActionResult> SendMessage(string message, string id)
         {
             User sender = null;
@@ -34,15 +43,11 @@ namespace CVProjekt1._0.Controllers
                 IsRead = false,
                 DateSent = DateTime.Now
             };
-            Console.WriteLine(receiver);
+            TempData["SuccessMessage"] = "Your message was sent successfully.";
             receiver.ReceivedMessages.Add(newMessage);
             _context.Add(newMessage);
             _context.SaveChanges();
-            return RedirectToAction("VisitProfile");
-        }
-        public IActionResult Index()
-        {
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CVProjekt1._0.Models;
 
 namespace CVProjekt1._0.Models
 {
