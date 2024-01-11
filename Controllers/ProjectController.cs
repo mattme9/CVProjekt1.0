@@ -30,23 +30,21 @@ namespace CVProjekt1._0.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Hämta inloggad användares ID
                 var creatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Skapa nytt Project-objekt och fyll det med värden från vymodellen
+                
                 var newProject = new Project
                 {
                     Title = viewModel.Title,
                     Description = viewModel.Description,
                     DesiredManpower = (int)viewModel.DesiredManpower,
-                    CreatorId = creatorId // Användarens ID som skapar projektet
+                    CreatorId = creatorId
                 };
 
-                // Lägg till och spara det nya projektet i databasen
                 _context.Projects.Add(newProject);
                 _context.SaveChanges();
 
-                // Lägg till skaparens deltagande i det nya projektet
+               
                 var newParticipation = new ProjectUser
                 {
                     ProjectId = newProject.ProjectId,
@@ -56,13 +54,13 @@ namespace CVProjekt1._0.Controllers
                 _context.ProjectUsers.Add(newParticipation);
                 _context.SaveChanges();
 
-                // Visa bekräftelsemodal
+               
                 TempData["ShowConfirmationModal"] = true;
 
-                return View("_Success"); // Eller den vy du vill visa efter att projektet skapats
+                return View("_Success");
             }
 
-            return View(viewModel); // Om modellen inte är giltig, returnera vymodellen för att visa fel
+            return View(viewModel);
         }
 
 
