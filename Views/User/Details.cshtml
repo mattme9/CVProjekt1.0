@@ -1,66 +1,78 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewBag.Title = "Details";
 
-}
 @model CVProjekt1._0.ViewModels.UserInfoViewModel
 @inject UserManager<User> _userManager
 
 @{
+    ViewBag.Title = "Details";
     var user = await _userManager.FindByNameAsync(User.Identity.Name);
     var profilePicturePath = user?.ProfilePicturePath;
+
 }
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>User Info</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>Username:</strong> @Model.UserName
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Email:</strong> @Model.Email
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Phone Number:</strong> @Model.PhoneNumber
+                        </li>
+                        <li class="list-group-item">
+                            <strong>First Name:</strong> @Model.FirstName
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Last Name:</strong> @Model.LastName
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Address:</strong> @Model.Address
+						</li>
+                        <li class="list-group-item">
+							<strong>City:</strong> @Model.City
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-<ul>
-    <h2>User Info</h2>
+            <!--Edit and Change Password buttons-->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <form asp-controller="User" asp-action="Edit">
+                        <button type="submit" class="btn btn-primary">Edit Profile</button>
+                    </form>
+                    <form asp-controller="User" asp-action="ChangePassword" class="mt-2">
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+                </div>
+            </div>
 
-    <li>
-        <h3>Username:</h3>
-        <p>@Model.UserName</p>
-    </li>
-    <li>
-        <h3>Email:</h3>
-		<p>@Model.Email</p>
-    </li>
-    <li>
-        <h3>First Name:</h3>
-		<p>@Model.FirstName</p>
-    </li>
-    <li>
-        <h3>Last Name:</h3>
-        <p>@Model.LastName</p>
-    </li>
-    <li>
-        <h3>Phone Number:</h3>
-		<p>@Model.PhoneNumber</p>
-    </li>
-    <li>
-        <h3>Address:</h3>
-		<p>@Model.Address</p>
-    </li>
-    <li>
-        <h3>City:</h3>
-        <p>@Model.City</p>
-    </li>
-</ul>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3>Upload Profile Picture</h3>
+                    <form asp-controller="User" asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="file" accept="image/*" name="profilePicture" class="form-control-file" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload Picture</button>
+                    </form>
 
-<form asp-controller="User" asp-action="Edit">
-    <button type="submit" class="btn btn-primary">Edit Profile</button>
-</form>
-<form asp-controller="User" asp-action="ChangePassword">
-    <button type="submit" class="btn btn-primary">Change Password</button>
-</form>
-<h3>Upload Profile Picture</h3>
-<form asp-controller="User" asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <input type="file" accept="image/*" name="profilePicture" class="form-control-file" />
+                    @if (!string.IsNullOrEmpty(profilePicturePath))
+                    {
+                        <div class="mt-3">
+                            <img src="@Url.Content(profilePicturePath)" alt="Profile Picture" class="img-fluid" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Upload Picture</button>
-</form>
-@if (!string.IsNullOrEmpty(profilePicturePath))
-{
-    <img src="@Url.Content(profilePicturePath)" alt="Profile Picture" class="img-fluid" width="300px" height="400px" />
-}
+</div>
