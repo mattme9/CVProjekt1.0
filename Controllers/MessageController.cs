@@ -40,13 +40,15 @@ namespace CVProjekt1._0.Controllers
             return View(messages);
         }
 
-        public async Task<IActionResult> SendMessage(string message, string id)
+        public async Task<IActionResult> SendMessage(string message, string id, bool isAnonymous)
         {
-
-            
-            var sender = await _userManager.FindByNameAsync(User.Identity.Name);
             var receiver = await _userManager.FindByNameAsync(id);
-            Debug.WriteLine(sender);
+            User sender = null;
+
+            if (!isAnonymous)
+            {
+                sender = await _userManager.FindByNameAsync(User.Identity.Name);
+            }
 
             var newMessage = new Message
             {
@@ -54,7 +56,8 @@ namespace CVProjekt1._0.Controllers
                 Receiver = receiver,
                 MessageText = message,
                 IsRead = false,
-                DateSent = DateTime.Now
+                DateSent = DateTime.Now,
+                IsAnonymous = isAnonymous
             };
 
             TempData["SuccessMessage"] = "Your message was sent successfully.";
@@ -64,6 +67,7 @@ namespace CVProjekt1._0.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult MarkAsRead(int messageId)
         {

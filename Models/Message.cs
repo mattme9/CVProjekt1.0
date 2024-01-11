@@ -22,5 +22,7 @@ namespace CVProjekt1._0.Models
         public virtual User Receiver { get; set; }
         [NotMapped] // Denna egenskap kommer inte att mappas till databasen
         public string SenderName => Sender?.UserName;
+
+        public Boolean IsAnonymous { get; set; }
     }
 }
