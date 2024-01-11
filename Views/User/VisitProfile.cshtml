@@ -14,6 +14,7 @@
 
 @if(currentUser != Model.UserId)
 {
+    <form asp-controller="Message" asp-action="SendMessage" asp-route-id="@Model.UserName" method="post">
     <div class="row">
         <div class="col-md-6">
             <h2>Send a message</h2>
@@ -21,6 +22,7 @@
             <button type="submit" class="btn btn-primary">Send Message</button>
         </div>
     </div>
+    </form>
 }
 
 <div class="row mt-5">

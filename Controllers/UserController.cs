@@ -18,23 +18,6 @@ namespace CVProjekt1._0.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> SendMessage(string message, string receiverId)
-        {
-            var sender = await _userManager.FindByNameAsync(User.Identity.Name);
-            var receiver = _context.Users.FirstOrDefault(u => u.Id == receiverId);
-
-            var newMessage = new Message
-            {
-                Sender = sender,
-                Receiver = receiver,
-                MessageText = message,
-                IsRead = false,
-            };
-            _context.Add(message);
-            _context.SaveChanges();
-            return RedirectToAction("VisitProfile");
-        }
-
         public async Task<IActionResult> ShowSearchForm()
         {
             return View();
