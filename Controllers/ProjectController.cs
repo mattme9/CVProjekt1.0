@@ -55,13 +55,16 @@ namespace CVProjekt1._0.Controllers
         public IActionResult Delete(int projectId)
         {
             var project = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
+
             if (project != null)
             {
                 _context.Projects.Remove(project);
                 _context.SaveChanges();
+
+                return RedirectToAction("List"); // Eller den vy du vill visa efter borttagning
             }
 
-            return RedirectToAction("_Delete", projectId);
+            return NotFound();
         }
 
         public IActionResult Details(int projectId)

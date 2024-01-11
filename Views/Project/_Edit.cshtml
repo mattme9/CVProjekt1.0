@@ -34,4 +34,9 @@
         <button type="submit" style="float: right; margin-right: 5rem;">Ändra</button>
     </form>
 
+    <!-- Ta bort-formuläret -->
+    <form action="@Url.Action("Delete", "Project", new { projectId = Model.ProjectId })" method="post">
+        <input type="hidden" asp-for="ProjectId" />
+        <button type="submit" class="btn btn-danger">Ta bort</button>
+    </form>
 </div>
