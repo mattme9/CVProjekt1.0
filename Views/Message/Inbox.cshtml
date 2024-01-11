@@ -1,37 +1,41 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     var unreadMessageCount = ViewBag.UnreadMessageCount as int? ?? 0; // Retrieve unread message count
 }
 <h2>Your Inbox (@unreadMessageCount unread)</h2>
 @model List<Message>
 
-
-
-<table>
+<h2>Your Inbox</h2>
+<table style="border-collapse: collapse; width: 100%;">
     <thead>
-        <tr>
-            <th>Sender</th>
-            <th>Message</th>
-            <th>Actions</th>
+        <tr style="border-bottom: 2px solid black;">
+            <th style="padding: 10px; border-right: 1px solid black;">Sender</th>
+            <th style="padding: 10px; border-right: 1px solid black;">Message</th>
+            <th style="padding: 10px;">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var message in Model)
         {
-            <tr>
-                <td>@(message.Sender?.UserName ?? "Anonymous")</td>
-                <td>@message.MessageText</td>
-                <td>
+            <tr style="border-bottom: 1px solid black;">
+                <td style="padding: 10px; border-right: 1px solid black;">
+                    @if (message.Sender != null)
+                    {
+                        @Html.Raw(message.SenderName)
+                    }
+                </td>
+                <td style="padding: 10px; border-right: 1px solid black;">@message.MessageText</td>
+                <td style="padding: 10px;">
                     @if (!message.IsRead)
                     {
                         <a href="@Url.Action("MarkAsRead", new { messageId = message.MessageId })">Mark as Read</a>
+                    }
+                    else
+                    {
+                        <a href="#">Message Read</a>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
 
