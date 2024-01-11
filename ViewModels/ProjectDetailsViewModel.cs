@@ -14,5 +14,6 @@ namespace CVProjekt1._0.ViewModels
         public User? User { get; set; }
         public int DesiredManpower { get; set; } // Lägg till detta attribut
         public string CreatorId { get; set; } // Lägg till detta attribut
+        
     }
 }
