@@ -49,7 +49,7 @@ namespace CVProjekt1._0.Controllers
             {
                 sender = await _userManager.FindByNameAsync(User.Identity.Name);
             }
-
+            
             var newMessage = new Message
             {
                 Sender = sender,
