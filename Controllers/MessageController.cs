@@ -20,10 +20,19 @@ namespace CVProjekt1._0.Controllers
         public IActionResult Inbox()
         {
             var currentUser = _userManager.GetUserAsync(User).Result;
-            var messages = _context.Messages
-            .Where(m => m.ReceiverId == currentUser.Id)
-            .ToList();
 
+            // Get unread messages for the current user
+            var unreadMessages = _context.Messages
+                .Where(m => m.ReceiverId == currentUser.Id && !m.IsRead)
+                .ToList();
+
+            // Pass the count of unread messages to the view
+            ViewData["UnreadMessageCount"] = unreadMessages.Count;
+
+            // Retrieve all messages for display
+            var messages = _context.Messages
+                .Where(m => m.ReceiverId == currentUser.Id)
+                .ToList();
 
             return View(messages);
         }

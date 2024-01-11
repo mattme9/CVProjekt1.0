@@ -2,11 +2,11 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewBag.Title = "Inbox";
+    var unreadMessageCount = ViewBag.UnreadMessageCount as int? ?? 0; // Retrieve unread message count
 }
+<h2>Your Inbox (@unreadMessageCount unread)</h2>
 @model List<Message>
 
-<h2>Your Inbox</h2>
 
 
 <table>
