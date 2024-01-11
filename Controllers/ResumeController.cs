@@ -5,137 +5,171 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ResumeController : Controller
 {
-    private readonly CVContext _context;
-    private readonly UserManager<User> _userManager;
+	private readonly CVContext _context;
+	private readonly UserManager<User> _userManager;
 
-    public ResumeController(CVContext context, UserManager<User> userManager)
-    {
-        _context = context;
-        _userManager = userManager;
-    }
+	public ResumeController(CVContext context, UserManager<User> userManager)
+	{
+		_context = context;
+		_userManager = userManager;
+	}
 
-    public async Task<IActionResult> Index()
-    {
-        
-        var user = await _userManager.GetUserAsync(User);
+	public async Task<IActionResult> Index()
+	{
+		try
+		{
+			var user = await _userManager.GetUserAsync(User);
 
-      
-        var description = _context.Resumes
-            .Where(r => r.UserId == user.Id)
-            .Select(r => r.Description)
-            .FirstOrDefault();
+			if (user == null)
+			{
+				TempData["ErrorMessage"] = "User not found.";
+				return RedirectToAction("Index");
+			}
 
-        var education = _context.Resumes
-			.Where(r => r.UserId == user.Id)
-			.Select(r => r.Education)
-			.FirstOrDefault();
+			var description = _context.Resumes
+				.Where(r => r.UserId == user.Id)
+				.Select(r => r.Description)
+				.FirstOrDefault();
 
-		var skill = _context.Resumes
-			.Where(r => r.UserId == user.Id)
-			.Select(r => r.Skill)
-			.FirstOrDefault();
+			var education = _context.Resumes
+				.Where(r => r.UserId == user.Id)
+				.Select(r => r.Education)
+				.FirstOrDefault();
 
-		var experience = _context.Resumes
-			.Where(r => r.UserId == user.Id)
-			.Select(r => r.Experience)
-			.FirstOrDefault();
+			var skill = _context.Resumes
+				.Where(r => r.UserId == user.Id)
+				.Select(r => r.Skill)
+				.FirstOrDefault();
 
-		
-		var viewModel = new ResumeViewModel
-        {
-            Description = description,
-            Education = education,
-            Skill = skill,
-            Experience = experience
-            
-        };
+			var experience = _context.Resumes
+				.Where(r => r.UserId == user.Id)
+				.Select(r => r.Experience)
+				.FirstOrDefault();
 
-        return View(viewModel);
-    }
+			var viewModel = new ResumeViewModel
+			{
+				Description = description,
+				Education = education,
+				Skill = skill,
+				Experience = experience
+			};
 
-    public IActionResult Create()
-    {
-        var user = _userManager.GetUserAsync(User).Result;
+			return View(viewModel);
+		}
+		catch (Exception ex)
+		{
+			TempData["ErrorMessage"] = "An error occurred while retrieving user information.";
+			return RedirectToAction("Index");
+		}
+	}
 
-        var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
+	public IActionResult Create()
+	{
+		try
+		{
+			var user = _userManager.GetUserAsync(User).Result;
 
-        if (existingResume == null)
-        {
-            existingResume = new Resume
-            {
-                UserId = user.Id
-            };
+			if (user == null)
+			{
+				TempData["ErrorMessage"] = "User not found.";
+				return RedirectToAction("Create");
+			}
 
-            _context.Resumes.Add(existingResume);
-        }
+			var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
 
-        return View(existingResume);
-    }
+			if (existingResume == null)
+			{
+				existingResume = new Resume
+				{
+					UserId = user.Id
+				};
 
-    [HttpPost]
-    public IActionResult Create(Resume model, string action)
-    {
-        var user = _userManager.GetUserAsync(User).Result;
+				_context.Resumes.Add(existingResume);
+			}
 
-        model.UserId = user.Id;
+			return View(existingResume);
+		}
+		catch (Exception ex)
+		{
+			TempData["ErrorMessage"] = "An error occurred while processing the request.";
+			return RedirectToAction("Create");
+		}
+	}
 
-        var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
+	[HttpPost]
+	public IActionResult Create(Resume model, string action)
+	{
+		try
+		{
+			var user = _userManager.GetUserAsync(User).Result;
 
-        if (existingResume == null)
-        {
-            existingResume = new Resume
-            {
-                UserId = user.Id
-            };
+			if (user == null)
+			{
+				TempData["ErrorMessage"] = "User not found.";
+				return RedirectToAction("Create");
+			}
 
-            _context.Resumes.Add(existingResume);
-        }
+			model.UserId = user.Id;
 
-        string successMessage = "";
+			var existingResume = _context.Resumes.FirstOrDefault(r => r.UserId == user.Id);
 
-        switch (action)
-        {
-            case "AddEducation":
-                if (!string.IsNullOrEmpty(model.Education))
-                {
-                    existingResume.Education = model.Education;
-                    successMessage = "Education updated";
-                }
-                break;
+			if (existingResume == null)
+			{
+				existingResume = new Resume
+				{
+					UserId = user.Id
+				};
 
-            case "AddSkill":
-                if (!string.IsNullOrEmpty(model.Skill))
-                {
-                    existingResume.Skill = model.Skill;
-                    successMessage = "Skills updated";
-                }
-                break;
+				_context.Resumes.Add(existingResume);
+			}
 
-            case "AddExperience":
-                if (!string.IsNullOrEmpty(model.Experience))
-                {
-                    existingResume.Experience = model.Experience;
-                    successMessage = "Experience updated";
-                }
-                break;
+			string successMessage = "";
 
-            case "SaveAboutMe":
-                existingResume.Description = model.Description;
-                successMessage = "About me updated";
-                break;
+			switch (action)
+			{
+				case "AddEducation":
+					if (!string.IsNullOrEmpty(model.Education))
+					{
+						existingResume.Education = model.Education;
+						successMessage = "Education updated";
+					}
+					break;
 
-            default:
-                break;
-        }
+				case "AddSkill":
+					if (!string.IsNullOrEmpty(model.Skill))
+					{
+						existingResume.Skill = model.Skill;
+						successMessage = "Skills updated";
+					}
+					break;
 
-        _context.SaveChanges();
+				case "AddExperience":
+					if (!string.IsNullOrEmpty(model.Experience))
+					{
+						existingResume.Experience = model.Experience;
+						successMessage = "Experience updated";
+					}
+					break;
 
-        TempData["Message"] = successMessage + " successfully.";
+				case "SaveAboutMe":
+					existingResume.Description = model.Description;
+					successMessage = "About me updated";
+					break;
 
-        return RedirectToAction("Create");
-    }
+				default:
+					break;
+			}
 
+			_context.SaveChanges();
 
+			TempData["Message"] = successMessage + " successfully.";
+
+			return RedirectToAction("Create");
+		}
+		catch (Exception ex)
+		{
+			TempData["ErrorMessage"] = "An error occurred while processing the request.";
+			return RedirectToAction("Create");
+		}
+	}
 }
-
-
