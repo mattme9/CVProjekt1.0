@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "User Profile";
 }
-
+@model CVProjekt1._0.ViewModels.VisitProfileViewModel;
 @inject UserManager<User> _userManager;
 
 @{
     var currentUser = _userManager.GetUserId(User);
     var successMessage = TempData["SuccessMessage"] as string;
+    var user = await _userManager.FindByNameAsync(Model.UserName);
+    var profilePicturePath = user?.ProfilePicturePath;
 }
-
-@model CVProjekt1._0.ViewModels.VisitProfileViewModel;
 
 
 @if(currentUser != Model.UserId)
@@ -142,15 +142,54 @@
             <div class="my-3 p-3">
                 <h2 class="display-5">Resume</h2>
             </div>
-            <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                @if (Model.Resume != null)
-                {
-                    <p style="color: white">@Model.Resume.Description</p>
-                }
+            <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; border-radius: 21px 21px 0 0; padding: 20px;">
+                <div class="my-3 p-3 bg-body-tertiary text-center text-white">
+                <section class="resume-section">
+                        @if (!string.IsNullOrEmpty(profilePicturePath))
+                        {
+                            <img src="@Url.Content(profilePicturePath)" alt="Profile Picture" class="img-fluid" width="200px" height="300px" />
+                        }
+                        <header>
+                            <h2>Description</h2>
+                        </header>
+                        <article>
+                            <p>@Model.Resume.Description</p>
+                        </article>
+                    </section>
+
+                    <section class="resume-section">
+                        <header>
+                            <h2>Education</h2>
+                        </header>
+                        <article>
+                            <p>@Model.Resume.Education</p>
+                        </article>
+                    </section>
+
+                    <section class="resume-section">
+                        <header>
+                            <h2>Experience</h2>
+                        </header>
+                        <article>
+                            <p>@Model.Resume.Experience</p>
+                        </article>
+                    </section>
+
+                    <section class="resume-section">
+                        <header>
+                            <h2>Skills</h2>
+                        </header>
+                        <article>
+                            <p>@Model.Resume.Skill</p>
+                        </article>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="container-fluid">
     <div class="row">
