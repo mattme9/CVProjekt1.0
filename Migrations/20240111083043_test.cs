@@ -10,31 +10,7 @@ namespace CVProjekt1._0.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Description",
-                table: "Resumes",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Education",
-                table: "Resumes",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Experience",
-                table: "Resumes",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Skill",
-                table: "Resumes",
-                type: "nvarchar(max)",
-                nullable: true);
+            
         }
 
         /// <inheritdoc />

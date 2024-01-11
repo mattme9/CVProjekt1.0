@@ -11,7 +11,8 @@ namespace CVProjekt1._0.Models
         [ForeignKey(nameof(ProjectId))]
         public virtual Project Project { get; set; }
 
-        [ForeignKey(nameof(UserId))]
+        [ForeignKey(nameof(User.Id))]
         public virtual User User { get; set; }
     }
+
 }

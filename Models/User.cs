@@ -14,7 +14,8 @@ namespace CVProjekt1._0.Models
         public string ? PostalCode { get; set; }
         public string? ProfilePicturePath { get; set; }
         public bool isPrivate { get; set; }
-        public virtual IEnumerable<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();
+        public List<ProjectUser> Projects { get; set; }
+        public virtual ICollection<ProjectUser> ProjectUsers { get; set; } = new List<ProjectUser>();
         public virtual ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
         public virtual Resume Resume { get; set; }
     }

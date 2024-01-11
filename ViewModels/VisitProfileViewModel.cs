@@ -13,8 +13,8 @@ namespace CVProjekt1._0.ViewModels
         public string City { get; set; }
         public string ProfilePicture { get; set; }
         public Resume Resume { get; set; }
-        public List<Project> Projects { get; set; }
+        public List<string> ProjectDescriptions { get; set; }
         public string Message { get; set; }
-        
+        public List<ProjectDetailsViewModel> Projects { get; set; }
     }
 }

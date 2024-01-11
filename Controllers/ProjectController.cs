@@ -172,7 +172,8 @@ namespace CVProjekt1._0.Controllers
                     _context.ProjectUsers.Add(newParticipation);
                     _context.SaveChanges();
 
-                    TempData["ShowConfirmationModal"] = true;
+                    // Sätt TempData för bekräftelsemeddelande
+                    TempData["ParticipationConfirmation"] = true;
                 }
 
                 // Lämplig omdirigering efter deltagande

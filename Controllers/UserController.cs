@@ -46,29 +46,38 @@ namespace CVProjekt1._0.Controllers
 
         public IActionResult GoToUser(string id)
         {
-            var user = _context.Users.Include("Resume").FirstOrDefault(u => u.Id == id);
-            var projects = _context.Projects.Where(p => p.User == user).ToList();
+            var user = _context.Users
+                .Include(u => u.Resume)
+                .Include(u => u.ProjectUsers)
+                    .ThenInclude(pu => pu.Project)
+                .FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {
                 return NotFound();
             }
-            if (user.isPrivate && user.UserName != User.Identity.Name)
+
+            var projectViewModels = user.ProjectUsers.Select(pu => new ProjectDetailsViewModel
             {
-                return RedirectToAction("Index", "Home");
-            }
+                Description = pu.Project.Description,
+                // Fyll på med andra projektrelaterade egenskaper här om det behövs
+            }).ToList();
+
             VisitProfileViewModel viewModel = new VisitProfileViewModel
             {
+                UserId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 ProfilePicture = user.ProfilePicturePath,
                 Resume = user.Resume,
-                Projects = projects,
-                UserId = user.Id,
+                Projects = projectViewModels,
                 UserName = user.UserName,
             };
+
             return View("VisitProfile", viewModel);
         }
+
+
 
         public IActionResult Details()
         {
