@@ -197,9 +197,9 @@
         {
             @foreach (var project in Model.Projects)
             {
-                <div class="col-md-6 bg-body-tertiary text-center overflow-hidden">
+                <div class="col-md-6 bg-body-tertiary text-center overflow-hidden" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <div class="my-3 p-3">
-                        <h2 class="display-5">Project</h2>
+                        <h2 class="display-5">@project.Title</h2>
                     </div>
                     <div class="bg-body shadow-sm mx-auto d-flex align-items-center justify-content-center" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
                         <p style="color: white">@project.Description</p>
@@ -213,6 +213,7 @@
         }
     </div>
 </div>
+
 
 
 

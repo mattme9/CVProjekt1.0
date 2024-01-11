@@ -68,18 +68,20 @@
     <a asp-controller="Project" asp-action="Create">
         <button type="submit" class="btn btn-primary">Create New Project</button>
     </a>
+    @if (TempData["ParticipationConfirmation"] != null && (bool)TempData["ParticipationConfirmation"])
+    {
+        <div class="alert alert-success" role="alert">
+            Användaren har lagts till i projektet.
+        </div>
+    }
+    else if (TempData["ParticipationConfirmation"] != null && !(bool)TempData["ParticipationConfirmation"])
+    {
+        <div class="alert alert-success" role="alert">
+            Användaren är redan med i projektet.
+        </div>
+    }
 </div>
 
 <!-- Innehåll för att visa bekräftelsemeddelandet -->
-@if (TempData["ParticipationConfirmation"] != null && (bool)TempData["ParticipationConfirmation"])
-{
-    <div class="alert alert-success" role="alert">
-        Användaren har lagts till i projektet.
-    </div>
-}
-else {
-<div class="alert alert-success" role="alert">
-    Användaren är redan med i projektet.
-</div>
-}
+
 

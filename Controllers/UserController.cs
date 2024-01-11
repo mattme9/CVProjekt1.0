@@ -60,6 +60,7 @@ namespace CVProjekt1._0.Controllers
             var projectViewModels = user.ProjectUsers.Select(pu => new ProjectDetailsViewModel
             {
                 Description = pu.Project.Description,
+                Title = pu.Project.Title,
                 // Fyll på med andra projektrelaterade egenskaper här om det behövs
             }).ToList();
 
