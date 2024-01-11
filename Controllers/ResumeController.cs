@@ -2,6 +2,7 @@
 using CVProjekt1._0.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 public class ResumeController : Controller
 {
@@ -14,7 +15,8 @@ public class ResumeController : Controller
 		_userManager = userManager;
 	}
 
-	public async Task<IActionResult> Index()
+   
+    public async Task<IActionResult> Index()
 	{
 		try
 		{
