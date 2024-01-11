@@ -108,13 +108,33 @@ namespace CVProjekt1._0.Controllers
             return View("_Edit", viewModel);
         }
 
-        [HttpPost]
-        public IActionResult EditProject(int projectId, ProjectDetailsViewModel viewModel)
-        {
-            return View("_Edit");
-        }
+		[HttpPost]
+		public IActionResult EditProject(int projectId, ProjectDetailsViewModel viewModel)
+		{
+			
+				// Hämta projektet från databasen
+				var existingProject = _context.Projects.FirstOrDefault(p => p.ProjectId == projectId);
 
-        public IActionResult List()
+				if (existingProject != null)
+				{
+					// Uppdatera värden från vymodellen
+					existingProject.Title = viewModel.Title;
+					existingProject.Description = viewModel.Description;
+					existingProject.DesiredManpower = viewModel.DesiredManpower;
+
+					// Spara ändringarna i databasen
+					_context.SaveChanges();
+
+					return RedirectToAction("Details", new { projectId = existingProject.ProjectId });
+
+				}
+			
+
+			// Om modellen inte är giltig eller projektet inte hittades, returnera till redigeringsvyn
+			return View("_Edit", viewModel);
+		}
+
+		public IActionResult List()
         {
             var projects = _context.Projects.ToList();
             var viewModel = new ListProjectViewModel
