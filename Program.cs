@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CVContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CVContext")));
+    options.UseLazyLoadingProxies(false).UseSqlServer(builder.Configuration.GetConnectionString("CVContext")));
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<CVContext>()
     .AddDefaultTokenProviders();
